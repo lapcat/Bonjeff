@@ -29,4 +29,10 @@ class AppDelegate:NSObject, NSApplicationDelegate {
 	func applicationShouldTerminateAfterLastWindowClosed(_ sender:NSApplication) -> Bool {
 		return true
 	}
+	
+	@objc func openWebSite(_ sender:Any?) {
+		if let myURL = URL(string:"https://github.com/lapcat/Bonjeff") {
+			NSWorkspace.shared.open(myURL)
+		}
+	}
 }
