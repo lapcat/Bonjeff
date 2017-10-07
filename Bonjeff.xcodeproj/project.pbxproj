@@ -1,0 +1,243 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		522269781F81502E0092AAE3 /* BrowserWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522269771F81502E0092AAE3 /* BrowserWindowController.swift */; };
+		526C4A8B1F7F38B00021CC24 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526C4A8A1F7F38B00021CC24 /* MainMenu.swift */; };
+		5288CFA21F81878E00427D9C /* BrowserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5288CFA11F81878E00427D9C /* BrowserDelegate.swift */; };
+		5292456D1F85C89B00F2BC60 /* CopyOutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5292456C1F85C89B00F2BC60 /* CopyOutlineView.swift */; };
+		529AB41C1F806B8E003C4458 /* ServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529AB41B1F806B8E003C4458 /* ServiceDelegate.swift */; };
+		529F65091F845D6D00375B8F /* BonjourNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529F65081F845D6D00375B8F /* BonjourNode.swift */; };
+		52CDF5611F7F333C00F379C3 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CDF5601F7F333C00F379C3 /* main.swift */; };
+		52E8FA8D1F80278400CA9F73 /* RootBrowserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E8FA8C1F80278400CA9F73 /* RootBrowserDelegate.swift */; };
+		52E8FA8F1F803DE800CA9F73 /* ServiceBrowserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E8FA8E1F803DE800CA9F73 /* ServiceBrowserDelegate.swift */; };
+		52E8FA911F8046EF00CA9F73 /* DomainBrowserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E8FA901F8046EF00CA9F73 /* DomainBrowserDelegate.swift */; };
+		52EDE57D1F7EF3430026C52B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EDE57C1F7EF3430026C52B /* AppDelegate.swift */; };
+		52EDE57F1F7EF3430026C52B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52EDE57E1F7EF3430026C52B /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		522269771F81502E0092AAE3 /* BrowserWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserWindowController.swift; sourceTree = "<group>"; };
+		5248A0521F7EFA710024E37D /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = SOURCE_ROOT; };
+		5248A0531F7EFA710024E37D /* DeveloperID.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DeveloperID.xcconfig; sourceTree = SOURCE_ROOT; };
+		5248A0541F7EFA710024E37D /* Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Shared.xcconfig; sourceTree = SOURCE_ROOT; };
+		526C4A8A1F7F38B00021CC24 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
+		5288CFA11F81878E00427D9C /* BrowserDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserDelegate.swift; sourceTree = "<group>"; };
+		5292456C1F85C89B00F2BC60 /* CopyOutlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyOutlineView.swift; sourceTree = "<group>"; };
+		529AB41B1F806B8E003C4458 /* ServiceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDelegate.swift; sourceTree = "<group>"; };
+		529F65081F845D6D00375B8F /* BonjourNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourNode.swift; sourceTree = "<group>"; };
+		52CDF5601F7F333C00F379C3 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		52E8FA8C1F80278400CA9F73 /* RootBrowserDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootBrowserDelegate.swift; sourceTree = "<group>"; };
+		52E8FA8E1F803DE800CA9F73 /* ServiceBrowserDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBrowserDelegate.swift; sourceTree = "<group>"; };
+		52E8FA901F8046EF00CA9F73 /* DomainBrowserDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainBrowserDelegate.swift; sourceTree = "<group>"; };
+		52EDE5791F7EF3430026C52B /* Bonjeff.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Bonjeff.app; path = .app; sourceTree = BUILT_PRODUCTS_DIR; };
+		52EDE57C1F7EF3430026C52B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		52EDE57E1F7EF3430026C52B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		52EDE5831F7EF3430026C52B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		52EDE5841F7EF3430026C52B /* Bonjeff.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bonjeff.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		52EDE5761F7EF3430026C52B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5248A0501F7EF6A10024E37D /* source */ = {
+			isa = PBXGroup;
+			children = (
+				52CDF5601F7F333C00F379C3 /* main.swift */,
+				52EDE57C1F7EF3430026C52B /* AppDelegate.swift */,
+				526C4A8A1F7F38B00021CC24 /* MainMenu.swift */,
+				522269771F81502E0092AAE3 /* BrowserWindowController.swift */,
+				5292456C1F85C89B00F2BC60 /* CopyOutlineView.swift */,
+				529F65081F845D6D00375B8F /* BonjourNode.swift */,
+				5288CFA11F81878E00427D9C /* BrowserDelegate.swift */,
+				52E8FA8C1F80278400CA9F73 /* RootBrowserDelegate.swift */,
+				52E8FA901F8046EF00CA9F73 /* DomainBrowserDelegate.swift */,
+				52E8FA8E1F803DE800CA9F73 /* ServiceBrowserDelegate.swift */,
+				529AB41B1F806B8E003C4458 /* ServiceDelegate.swift */,
+			);
+			path = source;
+			sourceTree = SOURCE_ROOT;
+		};
+		5248A0511F7EF6A70024E37D /* nonsource */ = {
+			isa = PBXGroup;
+			children = (
+				52EDE57E1F7EF3430026C52B /* Assets.xcassets */,
+				52EDE5841F7EF3430026C52B /* Bonjeff.entitlements */,
+				52EDE5831F7EF3430026C52B /* Info.plist */,
+			);
+			path = nonsource;
+			sourceTree = SOURCE_ROOT;
+		};
+		52EDE5701F7EF3430026C52B = {
+			isa = PBXGroup;
+			children = (
+				5248A0521F7EFA710024E37D /* Debug.xcconfig */,
+				5248A0531F7EFA710024E37D /* DeveloperID.xcconfig */,
+				5248A0541F7EFA710024E37D /* Shared.xcconfig */,
+				5248A0511F7EF6A70024E37D /* nonsource */,
+				5248A0501F7EF6A10024E37D /* source */,
+				52EDE57A1F7EF3430026C52B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		52EDE57A1F7EF3430026C52B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				52EDE5791F7EF3430026C52B /* Bonjeff.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		52EDE5781F7EF3430026C52B /* Bonjeff */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 52EDE5871F7EF3430026C52B /* Build configuration list for PBXNativeTarget "Bonjeff" */;
+			buildPhases = (
+				52EDE5751F7EF3430026C52B /* Sources */,
+				52EDE5761F7EF3430026C52B /* Frameworks */,
+				52EDE5771F7EF3430026C52B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Bonjeff;
+			productName = Bonjeff;
+			productReference = 52EDE5791F7EF3430026C52B /* Bonjeff.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		52EDE5711F7EF3430026C52B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0900;
+				LastUpgradeCheck = 0900;
+				ORGANIZATIONNAME = "Jeff Johnson";
+				TargetAttributes = {
+					52EDE5781F7EF3430026C52B = {
+						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Manual;
+					};
+				};
+			};
+			buildConfigurationList = 52EDE5741F7EF3430026C52B /* Build configuration list for PBXProject "Bonjeff" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 52EDE5701F7EF3430026C52B;
+			productRefGroup = 52EDE57A1F7EF3430026C52B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				52EDE5781F7EF3430026C52B /* Bonjeff */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		52EDE5771F7EF3430026C52B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52EDE57F1F7EF3430026C52B /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		52EDE5751F7EF3430026C52B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				522269781F81502E0092AAE3 /* BrowserWindowController.swift in Sources */,
+				529F65091F845D6D00375B8F /* BonjourNode.swift in Sources */,
+				529AB41C1F806B8E003C4458 /* ServiceDelegate.swift in Sources */,
+				52E8FA8D1F80278400CA9F73 /* RootBrowserDelegate.swift in Sources */,
+				52E8FA8F1F803DE800CA9F73 /* ServiceBrowserDelegate.swift in Sources */,
+				5288CFA21F81878E00427D9C /* BrowserDelegate.swift in Sources */,
+				52E8FA911F8046EF00CA9F73 /* DomainBrowserDelegate.swift in Sources */,
+				52CDF5611F7F333C00F379C3 /* main.swift in Sources */,
+				526C4A8B1F7F38B00021CC24 /* MainMenu.swift in Sources */,
+				52EDE57D1F7EF3430026C52B /* AppDelegate.swift in Sources */,
+				5292456D1F85C89B00F2BC60 /* CopyOutlineView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		52EDE5851F7EF3430026C52B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5248A0541F7EFA710024E37D /* Shared.xcconfig */;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		52EDE5861F7EF3430026C52B /* DeveloperID */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5248A0541F7EFA710024E37D /* Shared.xcconfig */;
+			buildSettings = {
+			};
+			name = DeveloperID;
+		};
+		52EDE5881F7EF3430026C52B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5248A0521F7EFA710024E37D /* Debug.xcconfig */;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		52EDE5891F7EF3430026C52B /* DeveloperID */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5248A0531F7EFA710024E37D /* DeveloperID.xcconfig */;
+			buildSettings = {
+			};
+			name = DeveloperID;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		52EDE5741F7EF3430026C52B /* Build configuration list for PBXProject "Bonjeff" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52EDE5851F7EF3430026C52B /* Debug */,
+				52EDE5861F7EF3430026C52B /* DeveloperID */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		52EDE5871F7EF3430026C52B /* Build configuration list for PBXNativeTarget "Bonjeff" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52EDE5881F7EF3430026C52B /* Debug */,
+				52EDE5891F7EF3430026C52B /* DeveloperID */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 52EDE5711F7EF3430026C52B /* Project object */;
+}

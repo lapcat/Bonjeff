@@ -1,0 +1,21 @@
+#include "DEVELOPMENT_TEAM.xcconfig"
+//Create the file DEVELOPMENT_TEAM.xcconfig in the project directory
+//with the following build setting:
+//DEVELOPMENT_TEAM = [Your TeamID]
+
+ARCHS = x86_64
+BONJEFF_SHORT_VERSION = 1.0.0
+BONJEFF_VERSION = 1.0.0
+CODE_SIGN_ENTITLEMENTS = nonsource/Bonjeff.entitlements
+CODE_SIGN_STYLE = Manual
+COMBINE_HIDPI_IMAGES = YES
+GCC_GENERATE_DEBUGGING_SYMBOLS = YES
+INFOPLIST_EXPAND_BUILD_SETTINGS = YES
+INFOPLIST_FILE = nonsource/Info.plist
+LD_RUNPATH_SEARCH_PATHS = @executable_path/../Frameworks
+MACH_O_TYPE = mh_execute
+MACOSX_DEPLOYMENT_TARGET = 10.12
+PRODUCT_NAME = Bonjeff
+SDKROOT = macosx
+SWIFT_VERSION = 4.0
+WRAPPER_EXTENSION = app

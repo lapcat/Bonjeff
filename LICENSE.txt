@@ -1,0 +1,8 @@
+1. Bonjeff is Copyright © 2017 Jeff Johnson. All rights reserved.
+2. You may make copies of the Bonjeff source code and redistribute copies of the source code.
+3. All copies of the source code must include this license file unmodified.
+4. You may modify the source code, but you must not modify or remove this license file.
+5. You must not charge money for the unmodified or modified source code.
+6. You may compile the unmodified or modified source code and run the compiled products yourself.
+7. You must not redistribute the compiled products of the unmodified or modified source code without express written permission from Jeff Johnson.
+8. The spirit of this license agreement is that Jeff Johnson provides Bonjeff to the public for free, and nobody is to make money from selling Jeff's work as if it were their own.
