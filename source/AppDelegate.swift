@@ -8,11 +8,11 @@ class AppDelegate:NSObject, NSApplicationDelegate {
 				return bundleNameAsString
 			}
 			else {
-				print("CFBundleName not a String!")
+				NSLog("CFBundleName not a String!")
 			}
 		}
 		else {
-			print("CFBundleName nil!")
+			NSLog("CFBundleName nil!")
 		}
 		
 		return NSLocalizedString("Bonjeff", comment:"The name of this application")

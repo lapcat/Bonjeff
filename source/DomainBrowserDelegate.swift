@@ -27,7 +27,7 @@ class DomainBrowserDelegate:BrowserDelegate {
 				return String("\(service.name).\(transport).")
 			}
 		}
-		print("ERROR typeFromService:\(service)")
+		NSLog("ERROR typeFromService:%@", service)
 		return nil
 	}
 	
@@ -50,7 +50,7 @@ class DomainBrowserDelegate:BrowserDelegate {
 		
 		for delegate in delegates {
 			if delegate.type == type {
-				print("didFind duplicate service:\(service)")
+				NSLog("didFind duplicate service:%@", service)
 				return
 			}
 		}

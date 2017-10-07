@@ -26,7 +26,7 @@ class ServiceBrowserDelegate:BrowserDelegate {
 	func netServiceBrowser(_ sender:NetServiceBrowser, didFind service:NetService, moreComing:Bool) {
 		for delegate in delegates {
 			if delegate.service == service {
-				print("didFind duplicate service:\(service)")
+				NSLog("didFind duplicate service:%@", service)
 				return
 			}
 		}

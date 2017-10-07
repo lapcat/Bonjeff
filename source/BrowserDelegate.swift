@@ -24,6 +24,6 @@ class BrowserDelegate:NSObject, NetServiceBrowserDelegate, BonjourNode {
 	}
 	
 	func netServiceBrowser(_ sender:NetServiceBrowser, didNotSearch errorDict:[String:NSNumber]) {
-		print("netServiceBrowser:\(sender) didNotSearch:\(errorDict)")
+		NSLog("netServiceBrowser:%@ didNotSearch:%@", sender, errorDict)
 	}
 }

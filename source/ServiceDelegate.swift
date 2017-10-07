@@ -57,7 +57,7 @@ class ServiceDelegate:NSObject, NetServiceDelegate, BonjourNode {
 								resolved.append(line)
 							}
 							else {
-								print("inet_ntop errno \(errno) from \(data)")
+								NSLog("inet_ntop errno %i from %@", errno, data as NSData)
 							}
 							buffer.deallocate(capacity:size)
 						}
@@ -71,13 +71,13 @@ class ServiceDelegate:NSObject, NetServiceDelegate, BonjourNode {
 								resolved.append(line)
 							}
 							else {
-								print("inet_ntop errno \(errno) from \(data)")
+								NSLog("inet_ntop errno %i from %@", errno, data as NSData)
 							}
 							buffer.deallocate(capacity:size)
 						}
 						
 					default:
-						print("Unexpected address family:\(family)")
+						NSLog("Unexpected address family: %i", family)
 					}
 				}
 			}
@@ -88,7 +88,7 @@ class ServiceDelegate:NSObject, NetServiceDelegate, BonjourNode {
 	}
 	
 	func netService(_ sender:NetService, didNotResolve errorDict:[String:NSNumber]) {
-		print("didNotResolve:\(sender) errorDict:\(errorDict)")
+		NSLog("didNotResolve:%@ errorDict:%@", sender, errorDict)
 	}
 	
 	func netService(_ sender:NetService, didUpdateTXTRecord data:Data) {

@@ -12,7 +12,7 @@ class RootBrowserDelegate:BrowserDelegate {
 	func netServiceBrowser(_ sender:NetServiceBrowser, didFindDomain domain:String, moreComing:Bool) {
 		for delegate in delegates {
 			if delegate.domain == domain {
-				print("didFind duplicate domain:\(domain)")
+				NSLog("didFind duplicate domain:%@", domain)
 				return
 			}
 		}
