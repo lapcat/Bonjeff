@@ -171,8 +171,12 @@ extension AppDelegate {
 	}
 	
 	func populateHelpMenu(_ menu:NSMenu) {
-		let title = applicationName + " " + NSLocalizedString("Web Site", comment:"Web Site")
-		let menuItem = menu.addItem(withTitle:title, action:#selector(AppDelegate.openWebSite(_:)), keyEquivalent:"")
+		var title = applicationName + " " + NSLocalizedString("Web Site", comment:"Web Site")
+		var menuItem = menu.addItem(withTitle:title, action:#selector(AppDelegate.openWebSite(_:)), keyEquivalent:"")
+		menuItem.target = NSApp.delegate
+		
+		title = NSLocalizedString("License", comment:"License for the app")
+		menuItem = menu.addItem(withTitle:title, action:#selector(AppDelegate.openLicense(_:)), keyEquivalent:"")
 		menuItem.target = NSApp.delegate
 	}
 }

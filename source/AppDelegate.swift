@@ -35,4 +35,8 @@ class AppDelegate:NSObject, NSApplicationDelegate {
 			NSWorkspace.shared.open(myURL)
 		}
 	}
+	
+	@objc func openLicense(_ sender:Any?) {
+		LicenseWindowController.open()
+	}
 }

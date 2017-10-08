@@ -13,6 +13,7 @@
 		5292456D1F85C89B00F2BC60 /* CopyOutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5292456C1F85C89B00F2BC60 /* CopyOutlineView.swift */; };
 		529AB41C1F806B8E003C4458 /* ServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529AB41B1F806B8E003C4458 /* ServiceDelegate.swift */; };
 		529F65091F845D6D00375B8F /* BonjourNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529F65081F845D6D00375B8F /* BonjourNode.swift */; };
+		52BD51861F8A5E6F00E6A122 /* LicenseWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BD51851F8A5E6F00E6A122 /* LicenseWindowController.swift */; };
 		52CDF5611F7F333C00F379C3 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CDF5601F7F333C00F379C3 /* main.swift */; };
 		52DB5DA01F8A579600714804 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 52DB5D9F1F8A579600714804 /* LICENSE.txt */; };
 		52E8FA8D1F80278400CA9F73 /* RootBrowserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E8FA8C1F80278400CA9F73 /* RootBrowserDelegate.swift */; };
@@ -32,6 +33,7 @@
 		5292456C1F85C89B00F2BC60 /* CopyOutlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyOutlineView.swift; sourceTree = "<group>"; };
 		529AB41B1F806B8E003C4458 /* ServiceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDelegate.swift; sourceTree = "<group>"; };
 		529F65081F845D6D00375B8F /* BonjourNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourNode.swift; sourceTree = "<group>"; };
+		52BD51851F8A5E6F00E6A122 /* LicenseWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseWindowController.swift; sourceTree = "<group>"; };
 		52CDF5601F7F333C00F379C3 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		52DB5D9F1F8A579600714804 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = SOURCE_ROOT; };
 		52E8FA8C1F80278400CA9F73 /* RootBrowserDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootBrowserDelegate.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 				526C4A8A1F7F38B00021CC24 /* MainMenu.swift */,
 				522269771F81502E0092AAE3 /* BrowserWindowController.swift */,
 				5292456C1F85C89B00F2BC60 /* CopyOutlineView.swift */,
+				52BD51851F8A5E6F00E6A122 /* LicenseWindowController.swift */,
 				529F65081F845D6D00375B8F /* BonjourNode.swift */,
 				5288CFA11F81878E00427D9C /* BrowserDelegate.swift */,
 				52E8FA8C1F80278400CA9F73 /* RootBrowserDelegate.swift */,
@@ -186,6 +189,7 @@
 				526C4A8B1F7F38B00021CC24 /* MainMenu.swift in Sources */,
 				52EDE57D1F7EF3430026C52B /* AppDelegate.swift in Sources */,
 				5292456D1F85C89B00F2BC60 /* CopyOutlineView.swift in Sources */,
+				52BD51861F8A5E6F00E6A122 /* LicenseWindowController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
