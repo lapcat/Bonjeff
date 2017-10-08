@@ -14,6 +14,7 @@
 		529AB41C1F806B8E003C4458 /* ServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529AB41B1F806B8E003C4458 /* ServiceDelegate.swift */; };
 		529F65091F845D6D00375B8F /* BonjourNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529F65081F845D6D00375B8F /* BonjourNode.swift */; };
 		52CDF5611F7F333C00F379C3 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CDF5601F7F333C00F379C3 /* main.swift */; };
+		52DB5DA01F8A579600714804 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 52DB5D9F1F8A579600714804 /* LICENSE.txt */; };
 		52E8FA8D1F80278400CA9F73 /* RootBrowserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E8FA8C1F80278400CA9F73 /* RootBrowserDelegate.swift */; };
 		52E8FA8F1F803DE800CA9F73 /* ServiceBrowserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E8FA8E1F803DE800CA9F73 /* ServiceBrowserDelegate.swift */; };
 		52E8FA911F8046EF00CA9F73 /* DomainBrowserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E8FA901F8046EF00CA9F73 /* DomainBrowserDelegate.swift */; };
@@ -32,6 +33,7 @@
 		529AB41B1F806B8E003C4458 /* ServiceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDelegate.swift; sourceTree = "<group>"; };
 		529F65081F845D6D00375B8F /* BonjourNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourNode.swift; sourceTree = "<group>"; };
 		52CDF5601F7F333C00F379C3 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		52DB5D9F1F8A579600714804 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = SOURCE_ROOT; };
 		52E8FA8C1F80278400CA9F73 /* RootBrowserDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootBrowserDelegate.swift; sourceTree = "<group>"; };
 		52E8FA8E1F803DE800CA9F73 /* ServiceBrowserDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBrowserDelegate.swift; sourceTree = "<group>"; };
 		52E8FA901F8046EF00CA9F73 /* DomainBrowserDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainBrowserDelegate.swift; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 		52EDE5701F7EF3430026C52B = {
 			isa = PBXGroup;
 			children = (
+				52DB5D9F1F8A579600714804 /* LICENSE.txt */,
 				5248A0521F7EFA710024E37D /* Debug.xcconfig */,
 				5248A0531F7EFA710024E37D /* DeveloperID.xcconfig */,
 				5248A0541F7EFA710024E37D /* Shared.xcconfig */,
@@ -160,6 +163,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52DB5DA01F8A579600714804 /* LICENSE.txt in Resources */,
 				52EDE57F1F7EF3430026C52B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
