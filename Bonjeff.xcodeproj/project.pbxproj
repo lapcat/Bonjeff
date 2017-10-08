@@ -39,7 +39,7 @@
 		52E8FA8C1F80278400CA9F73 /* RootBrowserDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootBrowserDelegate.swift; sourceTree = "<group>"; };
 		52E8FA8E1F803DE800CA9F73 /* ServiceBrowserDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBrowserDelegate.swift; sourceTree = "<group>"; };
 		52E8FA901F8046EF00CA9F73 /* DomainBrowserDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainBrowserDelegate.swift; sourceTree = "<group>"; };
-		52EDE5791F7EF3430026C52B /* Bonjeff.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Bonjeff.app; path = .app; sourceTree = BUILT_PRODUCTS_DIR; };
+		52EDE5791F7EF3430026C52B /* Bonjeff.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bonjeff.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52EDE57C1F7EF3430026C52B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52EDE57E1F7EF3430026C52B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		52EDE5831F7EF3430026C52B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
