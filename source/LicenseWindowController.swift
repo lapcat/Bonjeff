@@ -1,11 +1,11 @@
 import Cocoa
 
-class LicenseWindowController:NSObject, NSWindowDelegate {
+class LicenseWindowController {
 	static var licenseWindow:NSWindow?
 	
 	static func open() {
-		guard licenseWindow == nil else {
-			licenseWindow!.makeKeyAndOrderFront(nil)
+		if let window = licenseWindow {
+			window.makeKeyAndOrderFront(nil)
 			return
 		}
 		
@@ -24,7 +24,7 @@ class LicenseWindowController:NSObject, NSWindowDelegate {
 	}
 	
 	static func showWindow(_ license:NSAttributedString) {
-		let label = NSTextField.init(labelWithAttributedString:license)
+		let label = NSTextField(labelWithAttributedString:license)
 		label.lineBreakMode = .byWordWrapping
 		label.usesSingleLineMode = false
 		label.translatesAutoresizingMaskIntoConstraints = false
@@ -47,7 +47,7 @@ class LicenseWindowController:NSObject, NSWindowDelegate {
 			])
 		
 		window.makeKeyAndOrderFront(nil)
-		window.center()
+		window.center() // Wait until after makeKeyAndOrderFront so the window sizes properly first
 		
 		licenseWindow = window
 		NotificationCenter.default.addObserver(forName:NSWindow.willCloseNotification, object:licenseWindow, queue:nil, using:{_ in
