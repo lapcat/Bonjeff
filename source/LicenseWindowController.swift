@@ -50,7 +50,12 @@ class LicenseWindowController {
 		window.center() // Wait until after makeKeyAndOrderFront so the window sizes properly first
 		
 		licenseWindow = window
-		NotificationCenter.default.addObserver(forName:NSWindow.willCloseNotification, object:licenseWindow, queue:nil, using:{_ in
+		
+		var observer:NSObjectProtocol?
+		observer = NotificationCenter.default.addObserver(forName:NSWindow.willCloseNotification, object:licenseWindow, queue:nil, using:{_ in
+			if let token = observer {
+				NotificationCenter.default.removeObserver(token)
+			}
 			licenseWindow = nil
 		})
 	}
