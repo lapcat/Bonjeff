@@ -29,6 +29,7 @@ class BrowserWindowController:NSObject, NSOutlineViewDataSource, NSOutlineViewDe
 		scrollView.translatesAutoresizingMaskIntoConstraints = false
 		
 		let contentView:NSView = window.contentView!
+		contentView.wantsLayer = true // Fix for AppKit issue where outline view draws the bottom window corners
 		contentView.addSubview(scrollView)
 		
 		NSLayoutConstraint.activate([
