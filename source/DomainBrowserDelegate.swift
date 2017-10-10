@@ -20,8 +20,10 @@ class DomainBrowserDelegate:BrowserDelegate {
 		let serviceType = service.type
 		// e.g. "_tcp.<Domain>".
 		// See the explanation below in start()
+		// According to the spec, the <Domain> part doesn't matter.
+		// Don't check whether it matches, because it may return "local" instead of "members.btmm.icloud.com".
 		let components = serviceType.split(separator:".", maxSplits:1)
-		if components.count == 2 && components[1] == domain {
+		if components.count == 2 {
 			let transport = components[0]
 			if !transport.isEmpty {
 				return String("\(service.name).\(transport).")
