@@ -22,10 +22,9 @@ class DomainBrowserDelegate:BrowserDelegate {
 		// See the explanation below in start()
 		// According to the spec, the <Domain> part doesn't matter.
 		// Don't check whether it matches, because it may return "local" instead of "members.btmm.icloud.com".
-		let components = serviceType.split(separator:".", maxSplits:1)
-		if components.count == 2 {
-			let transport = components[0]
-			if !transport.isEmpty {
+		if let dotIndex = serviceType.index(of:".") {
+			if dotIndex > serviceType.startIndex {
+				let transport = serviceType[..<dotIndex]
 				return String("\(service.name).\(transport).")
 			}
 		}
