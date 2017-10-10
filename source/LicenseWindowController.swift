@@ -51,11 +51,9 @@ class LicenseWindowController {
 		
 		licenseWindow = window
 		
-		var observer:NSObjectProtocol?
+		var observer:NSObjectProtocol!
 		observer = NotificationCenter.default.addObserver(forName:NSWindow.willCloseNotification, object:licenseWindow, queue:nil, using:{_ in
-			if let token = observer {
-				NotificationCenter.default.removeObserver(token)
-			}
+			NotificationCenter.default.removeObserver(observer)
 			licenseWindow = nil
 		})
 	}
