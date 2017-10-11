@@ -6,6 +6,7 @@ class ServiceBrowserDelegate:BrowserDelegate {
 	var delegates = [ServiceDelegate]()
 	override var children:[Any] { return delegates }
 	override var objectValue:String { return type }
+	override var persistentName:String { return type + domain }
 	
 	required init(type:String, domain:String) {
 		self.type = type
@@ -34,7 +35,6 @@ class ServiceBrowserDelegate:BrowserDelegate {
 		let newDelegate = ServiceDelegate(service)
 		delegates.append(newDelegate)
 		delegates.sort { $0.service.name < $1.service.name }
-		newDelegate.start()
 		NotificationCenter.default.post(name:.nodeDidAdd, object:newDelegate)
 	}
 	

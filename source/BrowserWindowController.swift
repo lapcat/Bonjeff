@@ -1,6 +1,7 @@
 import Cocoa
 
 class BrowserWindowController:NSObject, NSOutlineViewDataSource, NSOutlineViewDelegate, NSWindowDelegate {
+	static let expandedUserDefaultsKey = "ExpandedItems"
 	let browserDelegate = RootBrowserDelegate()
 	let outlineView = CopyOutlineView()
 	let window:NSWindow = {
@@ -58,13 +59,29 @@ class BrowserWindowController:NSObject, NSOutlineViewDataSource, NSOutlineViewDe
 		
 		scrollView.documentView = outlineView
 		
+		outlineView.delegate = self
 		outlineView.dataSource = self // Do this last, because it causes data source methods to be called
 		
 		NotificationCenter.default.addObserver(forName:.nodeDidAdd, object:nil, queue:nil, using:{
 			let object = $0.object
 			let parent = self.outlineView.parent(forItem:object)
 			self.outlineView.reloadItem(parent, reloadChildren:true)
-			self.outlineView.expandItem(object, expandChildren:true) // Auto-expand new items
+			if let node = object as? BonjourNode {
+				if let expandedDefaults = UserDefaults.standard.dictionary(forKey:BrowserWindowController.expandedUserDefaultsKey) {
+					let persistentName = node.persistentName
+					if let expandedNumber = expandedDefaults[persistentName] as? NSNumber {
+						if expandedNumber.boolValue {
+							self.outlineView.expandItem(node)
+						}
+						return
+					}
+				}
+				
+				if node is DomainBrowserDelegate {
+					// Expand new domains
+					self.outlineView.expandItem(node)
+				}
+			}
 		})
 		NotificationCenter.default.addObserver(forName:.nodeDidRemove, object:nil, queue:nil, using:{
 			let object = $0.object
@@ -132,5 +149,59 @@ class BrowserWindowController:NSObject, NSOutlineViewDataSource, NSOutlineViewDe
 			return leaf
 		}
 		return nil
+	}
+	
+	func outlineViewItemWillExpand(_ notification:Notification) {
+		guard let userInfo = notification.userInfo else {
+			return
+		}
+		guard let object = userInfo["NSObject"] else {
+			return
+		}
+		guard let node = object as? BonjourNode else {
+			return
+		}
+		
+		if node is ServiceDelegate {
+			node.start()
+		}
+		
+		saveNode(node, expanded:true)
+	}
+	
+	func outlineViewItemWillCollapse(_ notification:Notification) {
+		guard let userInfo = notification.userInfo else {
+			return
+		}
+		guard let object = userInfo["NSObject"] else {
+			return
+		}
+		guard let node = object as? BonjourNode else {
+			return
+		}
+		
+		if node is ServiceDelegate {
+			node.stop()
+		}
+		
+		saveNode(node, expanded:false)
+	}
+	
+	func saveNode(_ node:BonjourNode, expanded:Bool) {
+		let standardUserDefaults = UserDefaults.standard
+		let key = BrowserWindowController.expandedUserDefaultsKey
+		let persistentName = node.persistentName
+		if var expandedDefaults = standardUserDefaults.dictionary(forKey:key) {
+			if let expandedNumber = expandedDefaults[persistentName] as? NSNumber {
+				if expandedNumber.boolValue == expanded {
+					return // No change in value
+				}
+			}
+			expandedDefaults[persistentName] = expanded
+			standardUserDefaults.set(expandedDefaults, forKey:key)
+		}
+		else {
+			standardUserDefaults.set([persistentName:expanded], forKey:key)
+		}
 	}
 }

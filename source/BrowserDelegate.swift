@@ -7,6 +7,7 @@ class BrowserDelegate:NSObject, NetServiceBrowserDelegate, BonjourNode {
 	// These need to be overridden
 	var children:[Any] { fatalError() }
 	var objectValue:String { fatalError() }
+	var persistentName:String { fatalError() }
 	
 	func start() {
 		browser.includesPeerToPeer = true

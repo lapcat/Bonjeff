@@ -6,11 +6,13 @@ class ServiceDelegate:NSObject, NetServiceDelegate, BonjourNode {
 	var records = [String]()
 	var children:[Any] { return resolved + records  }
 	var objectValue:String { return service.name }
+	var persistentName:String
+	var started = false
 	
 	required init(_ service:NetService) {
 		self.service = service
+		persistentName = "\(service.name).\(service.type)\(service.domain)"
 		super.init()
-		reloadTXTRecord()
 	}
 	
 	@available(*, unavailable)
@@ -19,15 +21,22 @@ class ServiceDelegate:NSObject, NetServiceDelegate, BonjourNode {
 	}
 	
 	func start() {
-		service.delegate = self
-		service.startMonitoring()
-		service.resolve(withTimeout:0.0)
+		if !started {
+			started = true
+			reloadTXTRecord()
+			service.delegate = self
+			service.startMonitoring()
+			service.resolve(withTimeout:0.0)
+		}
 	}
 	
 	func stop() {
-		service.delegate = nil
-		service.stopMonitoring()
-		service.stop()
+		if started {
+			started = false
+			service.delegate = nil
+			service.stopMonitoring()
+			service.stop()
+		}
 	}
 	
 	func netServiceDidResolveAddress(_ sender:NetService) {

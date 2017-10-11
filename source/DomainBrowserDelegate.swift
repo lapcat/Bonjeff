@@ -5,6 +5,7 @@ class DomainBrowserDelegate:BrowserDelegate {
 	var delegates = [ServiceBrowserDelegate]()
 	override var children:[Any] { return delegates }
 	override var objectValue:String { return domain }
+	override var persistentName:String { return domain }
 	
 	required init(_ domain:String) {
 		self.domain = domain
