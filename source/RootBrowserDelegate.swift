@@ -19,7 +19,7 @@ class RootBrowserDelegate:BrowserDelegate {
 		
 		let newDelegate = DomainBrowserDelegate(domain)
 		delegates.append(newDelegate)
-		delegates.sort { $0.domain < $1.domain }
+		delegates.sort { $0.domain.localizedCaseInsensitiveCompare($1.domain) == .orderedAscending }
 		newDelegate.start()
 		NotificationCenter.default.post(name:.nodeDidAdd, object:newDelegate)
 	}

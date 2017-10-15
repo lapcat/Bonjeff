@@ -118,7 +118,7 @@ class ServiceDelegate:NSObject, NetServiceDelegate, BonjourNode {
 					records.append("\(key) = \(data.description)")
 				}
 			}
-			records.sort(by:<)
+			records.sort { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending }
 		}
 	}
 }
