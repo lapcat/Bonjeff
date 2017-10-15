@@ -5,11 +5,11 @@ class DomainBrowserDelegate:BrowserDelegate {
 	var delegates = [ServiceBrowserDelegate]()
 	override var children:[Any] { return delegates }
 	override var objectValue:String { return domain }
-	override var persistentName:String { return domain }
 	
 	required init(_ domain:String) {
 		self.domain = domain
 		super.init()
+		persistentName = domain.lowercased()
 	}
 	
 	@available(*, unavailable)
@@ -51,7 +51,7 @@ class DomainBrowserDelegate:BrowserDelegate {
 		}
 		
 		for delegate in delegates {
-			if delegate.type == type {
+			if delegate.type.caseInsensitiveCompare(type) == .orderedSame {
 				NSLog("didFind duplicate service:%@", service)
 				return
 			}
@@ -70,7 +70,7 @@ class DomainBrowserDelegate:BrowserDelegate {
 		}
 		
 		for (index, delegate) in delegates.enumerated() {
-			if delegate.type == type {
+			if delegate.type.caseInsensitiveCompare(type) == .orderedSame {
 				delegates.remove(at:index)
 				delegate.stop()
 				NotificationCenter.default.post(name:.nodeDidRemove, object:self)

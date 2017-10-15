@@ -11,7 +11,7 @@ class RootBrowserDelegate:BrowserDelegate {
 	
 	func netServiceBrowser(_ sender:NetServiceBrowser, didFindDomain domain:String, moreComing:Bool) {
 		for delegate in delegates {
-			if delegate.domain == domain {
+			if delegate.domain.caseInsensitiveCompare(domain) == .orderedSame {
 				NSLog("didFind duplicate domain:%@", domain)
 				return
 			}
@@ -26,7 +26,7 @@ class RootBrowserDelegate:BrowserDelegate {
 	
 	func netServiceBrowser(_ sender:NetServiceBrowser, didRemoveDomain domain:String, moreComing:Bool) {
 		for (index, delegate) in delegates.enumerated() {
-			if delegate.domain == domain {
+			if delegate.domain.caseInsensitiveCompare(domain) == .orderedSame {
 				delegates.remove(at:index)
 				delegate.stop()
 				NotificationCenter.default.post(name:.nodeDidRemove, object:nil) // nil is root item for outline view

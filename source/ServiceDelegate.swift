@@ -11,7 +11,7 @@ class ServiceDelegate:NSObject, NetServiceDelegate, BonjourNode {
 	
 	required init(_ service:NetService) {
 		self.service = service
-		persistentName = "\(service.name).\(service.type)\(service.domain)"
+		persistentName = "\(service.name).\(service.type)\(service.domain)".lowercased()
 		super.init()
 	}
 	

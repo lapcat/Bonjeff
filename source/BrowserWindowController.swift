@@ -2,6 +2,7 @@ import Cocoa
 
 class BrowserWindowController:NSObject, NSOutlineViewDataSource, NSOutlineViewDelegate, NSWindowDelegate {
 	static let expandedUserDefaultsKey = "ExpandedItems"
+	static let lowercasedExpandedUserDefaultsKey = "LowercasedExpandedItems"
 	let browserDelegate = RootBrowserDelegate()
 	let outlineView = CopyOutlineView()
 	let window:NSWindow = {
@@ -15,6 +16,7 @@ class BrowserWindowController:NSObject, NSOutlineViewDataSource, NSOutlineViewDe
 	}()
 	
 	func open(_ title:String) {
+		migrateUserDefaultsIfNecessary()
 		browserDelegate.start()
 		
 		window.center()
@@ -202,6 +204,26 @@ class BrowserWindowController:NSObject, NSOutlineViewDataSource, NSOutlineViewDe
 		}
 		else {
 			standardUserDefaults.set([persistentName:expanded], forKey:key)
+		}
+	}
+	
+	func migrateUserDefaultsIfNecessary() {
+		// UserDefaults keys are lowercased starting in Bonjeff 1.0.2
+		// Migrate Bonjeff 1.0.0 and 1.0.1 keys if necessary
+		let standardUserDefaults = UserDefaults.standard
+		let lowercaseExpandedKey = BrowserWindowController.lowercasedExpandedUserDefaultsKey
+		let lowercasedExpanded = standardUserDefaults.bool(forKey:lowercaseExpandedKey)
+		if !lowercasedExpanded {
+			standardUserDefaults.set(true, forKey:lowercaseExpandedKey)
+			
+			let expandedKey = BrowserWindowController.expandedUserDefaultsKey
+			if let expandedDefaults = standardUserDefaults.dictionary(forKey:expandedKey) {
+				var newDefaults = [String:Any]()
+				for (key, value) in expandedDefaults {
+					newDefaults[key.lowercased()] = value
+				}
+				standardUserDefaults.set(newDefaults, forKey:expandedKey)
+			}
 		}
 	}
 }
