@@ -37,7 +37,7 @@ extension AppDelegate {
 		NSApp.mainMenu = mainMenu
 	}
 	
-	func populateApplicationMenu(_ menu:NSMenu) {
+	private func populateApplicationMenu(_ menu:NSMenu) {
 		var title = NSLocalizedString("About", comment:"About menu item") + " " + applicationName
 		var menuItem = menu.addItem(withTitle:title, action:#selector(NSApplication.orderFrontStandardAboutPanel(_:)), keyEquivalent:"")
 		menuItem.target = NSApp
@@ -72,7 +72,7 @@ extension AppDelegate {
 		menuItem.target = NSApp
 	}
 	
-	func populateEditMenu(_ menu:NSMenu) {
+	private func populateEditMenu(_ menu:NSMenu) {
 		var title = NSLocalizedString("Undo", comment:"Undo menu item")
 		menu.addItem(withTitle:title, action:#selector(EditMenuActions.undo(_:)), keyEquivalent:"z")
 		
@@ -115,7 +115,7 @@ extension AppDelegate {
 		menu.setSubmenu(spellingMenu, for:menuItem)
 	}
 	
-	func populateFindMenu(_ menu:NSMenu) {
+	private func populateFindMenu(_ menu:NSMenu) {
 		var title = NSLocalizedString("Find…", comment:"Find… menu item")
 		var menuItem = menu.addItem(withTitle:title, action:#selector(NSResponder.performTextFinderAction(_:)), keyEquivalent:"f")
 		menuItem.tag = NSTextFinder.Action.showFindInterface.rawValue
@@ -136,7 +136,7 @@ extension AppDelegate {
 		menu.addItem(withTitle:title, action:#selector(NSResponder.centerSelectionInVisibleArea(_:)), keyEquivalent:"j")
 	}
 	
-	func populateSpellingMenu(_ menu:NSMenu) {
+	private func populateSpellingMenu(_ menu:NSMenu) {
 		var title = NSLocalizedString("Spelling…", comment:"Spelling… menu item")
 		menu.addItem(withTitle:title, action:#selector(NSText.showGuessPanel(_:)), keyEquivalent:":")
 		
@@ -147,7 +147,7 @@ extension AppDelegate {
 		menu.addItem(withTitle:title, action:#selector(NSTextView.toggleContinuousSpellChecking(_:)), keyEquivalent:"")
 	}
 	
-	func populateWindowMenu(_ menu:NSMenu) {
+	private func populateWindowMenu(_ menu:NSMenu) {
 		var title = NSLocalizedString("Close", comment:"Close Window menu item")
 		
 		menu.addItem(withTitle:title, action:#selector(NSWindow.performClose(_:)), keyEquivalent:"w")
@@ -170,7 +170,7 @@ extension AppDelegate {
 		menuItem.target = NSApp
 	}
 	
-	func populateHelpMenu(_ menu:NSMenu) {
+	private func populateHelpMenu(_ menu:NSMenu) {
 		var title = applicationName + " " + NSLocalizedString("Web Site", comment:"Web Site")
 		var menuItem = menu.addItem(withTitle:title, action:#selector(AppDelegate.openWebSite(_:)), keyEquivalent:"")
 		menuItem.target = NSApp.delegate

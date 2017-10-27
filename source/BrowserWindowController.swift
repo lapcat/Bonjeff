@@ -1,11 +1,11 @@
 import Cocoa
 
 class BrowserWindowController:NSObject, NSOutlineViewDataSource, NSOutlineViewDelegate, NSWindowDelegate {
-	static let expandedUserDefaultsKey = "ExpandedItems"
-	static let lowercasedExpandedUserDefaultsKey = "LowercasedExpandedItems"
-	let browserDelegate = RootBrowserDelegate()
-	let outlineView = CopyOutlineView()
-	let window:NSWindow = {
+	private static let expandedUserDefaultsKey = "ExpandedItems"
+	private static let lowercasedExpandedUserDefaultsKey = "LowercasedExpandedItems"
+	private let browserDelegate = RootBrowserDelegate()
+	private let outlineView = CopyOutlineView()
+	private let window:NSWindow = {
 		let contentRect = NSMakeRect(0.0, 0.0, 300, 200)
 		let styleMask:NSWindow.StyleMask = [.titled, .closable, .miniaturizable, .resizable]
 		let window = NSWindow(contentRect:contentRect, styleMask:styleMask, backing:.buffered, defer:true)
@@ -189,7 +189,7 @@ class BrowserWindowController:NSObject, NSOutlineViewDataSource, NSOutlineViewDe
 		saveNode(node, expanded:false)
 	}
 	
-	func saveNode(_ node:BonjourNode, expanded:Bool) {
+	private func saveNode(_ node:BonjourNode, expanded:Bool) {
 		let standardUserDefaults = UserDefaults.standard
 		let key = BrowserWindowController.expandedUserDefaultsKey
 		let persistentName = node.persistentName
@@ -207,7 +207,7 @@ class BrowserWindowController:NSObject, NSOutlineViewDataSource, NSOutlineViewDe
 		}
 	}
 	
-	func migrateUserDefaultsIfNecessary() {
+	private func migrateUserDefaultsIfNecessary() {
 		// UserDefaults keys are lowercased starting in Bonjeff 1.0.2
 		// Migrate Bonjeff 1.0.0 and 1.0.1 keys if necessary
 		let standardUserDefaults = UserDefaults.standard

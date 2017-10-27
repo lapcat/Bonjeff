@@ -1,7 +1,7 @@
 import Cocoa
 
 class LicenseWindowController {
-	static var licenseWindow:NSWindow?
+	private static var licenseWindow:NSWindow?
 	
 	static func open() {
 		if let window = licenseWindow {
@@ -23,7 +23,7 @@ class LicenseWindowController {
 		}
 	}
 	
-	static func showWindow(_ license:NSAttributedString) {
+	private static func showWindow(_ license:NSAttributedString) {
 		let label = NSTextField(labelWithAttributedString:license)
 		label.lineBreakMode = .byWordWrapping
 		label.usesSingleLineMode = false

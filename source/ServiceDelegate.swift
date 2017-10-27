@@ -2,12 +2,12 @@ import Cocoa
 
 class ServiceDelegate:NSObject, NetServiceDelegate, BonjourNode {
 	let service:NetService
-	var resolved = [String]()
-	var records = [String]()
+	private var resolved = [String]()
+	private var records = [String]()
 	var children:[Any] { return resolved + records  }
 	lazy var objectValue:String = service.name
 	lazy var persistentName:String = "\(service.name).\(service.type)\(service.domain)".lowercased()
-	var started = false
+	private var started = false
 	
 	required init(_ service:NetService) {
 		self.service = service

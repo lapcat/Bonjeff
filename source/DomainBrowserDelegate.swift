@@ -2,7 +2,7 @@ import Cocoa
 
 class DomainBrowserDelegate:BrowserDelegate {
 	let domain:String
-	var delegates = [ServiceBrowserDelegate]()
+	private var delegates = [ServiceBrowserDelegate]()
 	override var children:[Any] { return delegates }
 	override lazy var objectValue:String = domain
 	override lazy var persistentName:String = domain.lowercased()
@@ -17,7 +17,7 @@ class DomainBrowserDelegate:BrowserDelegate {
 		fatalError()
 	}
 	
-	func typeFromService(service:NetService) -> String? {
+	private func typeFromService(service:NetService) -> String? {
 		let serviceType = service.type
 		// e.g. "_tcp.<Domain>".
 		// See the explanation below in start()

@@ -1,7 +1,7 @@
 import Cocoa
 
 class RootBrowserDelegate:BrowserDelegate {
-	var delegates = [DomainBrowserDelegate]()
+	private var delegates = [DomainBrowserDelegate]()
 	override var children:[Any] { return delegates }
 
 	override func start() {

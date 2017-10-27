@@ -3,7 +3,7 @@ import Cocoa
 class ServiceBrowserDelegate:BrowserDelegate {
 	let domain:String
 	let type:String
-	var delegates = [ServiceDelegate]()
+	private var delegates = [ServiceDelegate]()
 	override var children:[Any] { return delegates }
 	override lazy var objectValue:String = type
 	override lazy var persistentName:String = {

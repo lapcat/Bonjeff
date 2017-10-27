@@ -1,7 +1,7 @@
 import Cocoa
 
 class AppDelegate:NSObject, NSApplicationDelegate {
-	lazy var windowController = BrowserWindowController()
+	private lazy var windowController = BrowserWindowController()
 	lazy var applicationName:String = {
 		if let bundleName = Bundle.main.object(forInfoDictionaryKey:"CFBundleName") {
 			if let bundleNameAsString = bundleName as? String {
