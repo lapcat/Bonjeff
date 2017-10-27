@@ -5,14 +5,16 @@ class ServiceBrowserDelegate:BrowserDelegate {
 	let type:String
 	var delegates = [ServiceDelegate]()
 	override var children:[Any] { return delegates }
-	override var objectValue:String { return type }
+	override lazy var objectValue:String = type
+	override lazy var persistentName:String = {
+		let name = type + domain
+		return name.lowercased()
+	}()
 	
 	required init(type:String, domain:String) {
 		self.type = type
 		self.domain = domain
 		super.init()
-		let name = type + domain
-		persistentName = name.lowercased()
 	}
 	
 	@available(*, unavailable)

@@ -5,13 +5,12 @@ class ServiceDelegate:NSObject, NetServiceDelegate, BonjourNode {
 	var resolved = [String]()
 	var records = [String]()
 	var children:[Any] { return resolved + records  }
-	var objectValue:String { return service.name }
-	var persistentName:String
+	lazy var objectValue:String = service.name
+	lazy var persistentName:String = "\(service.name).\(service.type)\(service.domain)".lowercased()
 	var started = false
 	
 	required init(_ service:NetService) {
 		self.service = service
-		persistentName = "\(service.name).\(service.type)\(service.domain)".lowercased()
 		super.init()
 	}
 	

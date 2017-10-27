@@ -3,7 +3,7 @@ import Cocoa
 protocol BonjourNode:NSObjectProtocol {
 	var children:[Any] { get }
 	var objectValue:String { get }
-	var persistentName:String { get set }
+	var persistentName:String { get }
 	func start()
 	func stop()
 }
