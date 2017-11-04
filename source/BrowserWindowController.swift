@@ -5,6 +5,23 @@ class BrowserWindowController:NSObject, NSOutlineViewDataSource, NSOutlineViewDe
 	private static let lowercasedExpandedUserDefaultsKey = "LowercasedExpandedItems"
 	private let browserDelegate = RootBrowserDelegate()
 	private let outlineView = CopyOutlineView()
+	private let fontSize = NSFont.smallSystemFontSize
+	private lazy var font = NSFont.systemFont(ofSize:fontSize)
+	private let paragraphStyle:NSParagraphStyle = {
+		let mutableStyle = NSMutableParagraphStyle()
+		mutableStyle.alignment = .natural
+		mutableStyle.lineBreakMode = .byTruncatingTail
+		return mutableStyle.copy() as! NSParagraphStyle
+	}()
+	private lazy var fontAttributes:[NSAttributedStringKey:Any] = [.font:font,
+																   .foregroundColor:NSColor.black,
+																   .paragraphStyle:paragraphStyle]
+	private lazy var boldFontAttributes:[NSAttributedStringKey:Any] = [.font:NSFont.boldSystemFont(ofSize:fontSize), 
+																	   .foregroundColor:NSColor.black,
+																	   .paragraphStyle:paragraphStyle]
+	private lazy var disabledFontAttributes:[NSAttributedStringKey:Any] = [.font:font, 
+																		   .foregroundColor:NSColor.disabledControlTextColor,
+																		   .paragraphStyle:paragraphStyle]
 	private let window:NSWindow = {
 		let contentRect = NSMakeRect(0.0, 0.0, 300, 200)
 		let styleMask:NSWindow.StyleMask = [.titled, .closable, .miniaturizable, .resizable]
@@ -56,6 +73,12 @@ class BrowserWindowController:NSObject, NSOutlineViewDataSource, NSOutlineViewDe
 		let column = NSTableColumn()
 		column.isEditable = false
 		column.resizingMask = .autoresizingMask
+		if let cell = column.dataCell as? NSCell {
+			cell.font = font
+			cell.lineBreakMode = .byTruncatingTail
+			cell.truncatesLastVisibleLine = true
+			cell.wraps = false
+		}
 		outlineView.addTableColumn(column)
 		outlineView.outlineTableColumn = column
 		
@@ -137,18 +160,57 @@ class BrowserWindowController:NSObject, NSOutlineViewDataSource, NSOutlineViewDe
 		if item == nil {
 			return nil
 		}
-		if let node = item as? BonjourNode {
-			return node.objectValue
+		if let browser = item as? BrowserDelegate {
+			let objectValue = browser.objectValue
+			let count = browser.children.count
+			if count > 0 {
+				let mutableString = NSMutableAttributedString(string:objectValue, attributes:fontAttributes)
+				let suffix = NSAttributedString(string:" - \(count)", attributes:disabledFontAttributes)
+				mutableString.append(suffix)
+				return mutableString
+			}
+			else {
+				return NSAttributedString(string:objectValue, attributes:fontAttributes)
+			}
 		}
-		return item
+		if let service = item as? ServiceDelegate {
+			return NSAttributedString(string:service.objectValue, attributes:boldFontAttributes)
+		}
+		if let (key, value) = item as? (String, String) {
+			let objectValue = NSAttributedString(string:value, attributes:fontAttributes)
+			if key.isEmpty {
+				return objectValue
+			}
+			else {
+				let mutableString = NSMutableAttributedString(string:key + ": ", attributes:boldFontAttributes)
+				mutableString.append(objectValue)
+				return mutableString
+			}
+		}
+		fatalError()
 	}
 	
 	func outlineView(_ outlineView:NSOutlineView, pasteboardWriterForItem item:Any) -> NSPasteboardWriting? {
-		if let node = item as? BonjourNode {
-			return node.objectValue as NSString
+		if let browser = item as? BrowserDelegate {
+			let objectValue = browser.objectValue
+			let count = browser.children.count
+			if count > 0 {
+				return objectValue + " - \(count)" as NSString
+			}
+			else {
+				return objectValue as NSString
+			}
 		}
-		else if let leaf = item as? NSString {
-			return leaf
+		if let service = item as? ServiceDelegate {
+			return service.objectValue as NSString
+		}
+		if let (key, value) = item as? (String, String) {
+			if key.isEmpty {
+				return value as NSString
+			}
+			else {
+				return key + ": " + value as NSString
+			}
 		}
 		return nil
 	}

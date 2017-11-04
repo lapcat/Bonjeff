@@ -2,11 +2,13 @@ import Cocoa
 
 class ServiceDelegate:NSObject, NetServiceDelegate, BonjourNode {
 	let service:NetService
-	private var resolved = [String]()
-	private var records = [String]()
-	var children:[Any] { return resolved + records  }
+	private var resolved = [(String, String)]()
+	private var records = [(String, String)]()
+	var children:[Any] { return resolved + records }
 	lazy var objectValue:String = service.name
 	lazy var persistentName:String = "\(service.name).\(service.type)\(service.domain)".lowercased()
+	private lazy var hostKey = NSLocalizedString("Host", comment:"Host of net service")
+	private lazy var portKey = NSLocalizedString("Port", comment:"Port of net service")
 	private var started = false
 	
 	required init(_ service:NetService) {
@@ -42,13 +44,11 @@ class ServiceDelegate:NSObject, NetServiceDelegate, BonjourNode {
 		resolved.removeAll()
 		
 		if let hostName = service.hostName {
-			let line = NSLocalizedString("Host", comment:"Host of net service") + ": \(hostName)"
-			resolved.append(line)
+			resolved.append( (hostKey, hostName) )
 		}
 		let port = service.port
 		if port > 0 {
-			let line = NSLocalizedString("Port", comment:"Port of net service") + ": \(port)"
-			resolved.append(line)
+			resolved.append( (portKey, "\(port)") )
 		}
 		if let addresses = service.addresses {
 			for data in addresses {
@@ -62,7 +62,7 @@ class ServiceDelegate:NSObject, NetServiceDelegate, BonjourNode {
 							let buffer = UnsafeMutablePointer<Int8>.allocate(capacity:size)
 							if let cString = inet_ntop(family, &addr, buffer, socklen_t(size)) {
 								let line = String(cString:cString)
-								resolved.append(line)
+								resolved.append( ("", line) )
 							}
 							else {
 								NSLog("inet_ntop errno %i from %@", errno, data as NSData)
@@ -76,7 +76,7 @@ class ServiceDelegate:NSObject, NetServiceDelegate, BonjourNode {
 							let buffer = UnsafeMutablePointer<Int8>.allocate(capacity:size)
 							if let cString = inet_ntop(family, &addr, buffer, socklen_t(size)) {
 								let line = String(cString:cString)
-								resolved.append(line)
+								resolved.append( ("", line) )
 							}
 							else {
 								NSLog("inet_ntop errno %i from %@", errno, data as NSData)
@@ -111,13 +111,14 @@ class ServiceDelegate:NSObject, NetServiceDelegate, BonjourNode {
 			let txtRecord = NetService.dictionary(fromTXTRecord:txtRecordData)
 			for (key, data) in txtRecord {
 				if let line = NSString(data:data, encoding:String.Encoding.utf8.rawValue) {
-					records.append("\(key) = \(line)")
+					records.append( (key, line as String) )
 				}
 				else {
-					records.append("\(key) = \(data.description)")
+					records.append( (key, data.description) )
 				}
 			}
-			records.sort { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending }
+			// Sort by key in (key, value)
+			records.sort { $0.0.localizedCaseInsensitiveCompare($1.0) == .orderedAscending }
 		}
 	}
 }
