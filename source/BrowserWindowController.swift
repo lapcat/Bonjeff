@@ -92,7 +92,7 @@ class BrowserWindowController:NSObject, NSOutlineViewDataSource, NSOutlineViewDe
 			let parent = self.outlineView.parent(forItem:object)
 			self.outlineView.reloadItem(parent, reloadChildren:true)
 			if let node = object as? BonjourNode {
-				if let expandedDefaults = UserDefaults.standard.dictionary(forKey:BrowserWindowController.expandedUserDefaultsKey) {
+				if let expandedDefaults = self.expandedUserDefaults() {
 					let persistentName = node.persistentName
 					if let expandedNumber = expandedDefaults[persistentName] as? NSNumber {
 						if expandedNumber.boolValue {
@@ -252,20 +252,22 @@ class BrowserWindowController:NSObject, NSOutlineViewDataSource, NSOutlineViewDe
 	}
 	
 	private func saveNode(_ node:BonjourNode, expanded:Bool) {
-		let standardUserDefaults = UserDefaults.standard
-		let key = BrowserWindowController.expandedUserDefaultsKey
-		let persistentName = node.persistentName
-		if var expandedDefaults = standardUserDefaults.dictionary(forKey:key) {
+		if let expandedDefaults = expandedUserDefaults() {
+			let persistentName = node.persistentName
 			if let expandedNumber = expandedDefaults[persistentName] as? NSNumber {
 				if expandedNumber.boolValue == expanded {
 					return // No change in value
 				}
 			}
-			expandedDefaults[persistentName] = expanded
-			standardUserDefaults.set(expandedDefaults, forKey:key)
+			let newDefaults = expandedDefaults.mutableCopy() as! NSMutableDictionary
+			newDefaults[persistentName] = expanded
+			UserDefaults.standard.set(newDefaults, forKey:BrowserWindowController.expandedUserDefaultsKey)
 		}
 		else {
-			standardUserDefaults.set([persistentName:expanded], forKey:key)
+			let persistentName = node.persistentName
+			// It's ok to use Swift Dictionary here,
+			// because we only have one dictionary key.
+			UserDefaults.standard.set([persistentName:expanded], forKey:BrowserWindowController.expandedUserDefaultsKey)
 		}
 	}
 	
@@ -278,14 +280,22 @@ class BrowserWindowController:NSObject, NSOutlineViewDataSource, NSOutlineViewDe
 		if !lowercasedExpanded {
 			standardUserDefaults.set(true, forKey:lowercaseExpandedKey)
 			
-			let expandedKey = BrowserWindowController.expandedUserDefaultsKey
-			if let expandedDefaults = standardUserDefaults.dictionary(forKey:expandedKey) {
-				var newDefaults = [String:Any]()
+			if let expandedDefaults = expandedUserDefaults() {
+				let newDefaults = NSMutableDictionary()
 				for (key, value) in expandedDefaults {
-					newDefaults[key.lowercased()] = value
+					if let oldKey = key as? String {
+						newDefaults[oldKey.lowercased()] = value
+					}
 				}
-				standardUserDefaults.set(newDefaults, forKey:expandedKey)
+				standardUserDefaults.set(newDefaults, forKey:BrowserWindowController.expandedUserDefaultsKey)
 			}
 		}
+	}
+	
+	private func expandedUserDefaults() -> NSDictionary? {
+		// We must use NSDictionary here, because Bonjour uses UTF-8 names,
+		// and different UTF-8 strings can be equal in Swift,
+		// in which case they would be the same Swift Dictionary key.
+		return UserDefaults.standard.object(forKey:BrowserWindowController.expandedUserDefaultsKey) as? NSDictionary
 	}
 }
