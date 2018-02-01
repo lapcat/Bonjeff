@@ -67,7 +67,11 @@ class ServiceDelegate:NSObject, NetServiceDelegate, BonjourNode {
 							else {
 								NSLog("inet_ntop errno %i from %@", errno, data as NSData)
 							}
-							buffer.deallocate(capacity:size)
+							#if swift(>=4.1)
+								buffer.deallocate()
+							#else
+								buffer.deallocate(capacity:size)
+							#endif
 						}
 					case AF_INET6:
 						bytes.withMemoryRebound(to:sockaddr_in6.self, capacity:1) {
@@ -81,7 +85,11 @@ class ServiceDelegate:NSObject, NetServiceDelegate, BonjourNode {
 							else {
 								NSLog("inet_ntop errno %i from %@", errno, data as NSData)
 							}
-							buffer.deallocate(capacity:size)
+							#if swift(>=4.1)
+								buffer.deallocate()
+							#else
+								buffer.deallocate(capacity:size)
+							#endif
 						}
 						
 					default:
