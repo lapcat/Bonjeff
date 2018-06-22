@@ -14,14 +14,11 @@ class BrowserWindowController:NSObject, NSOutlineViewDataSource, NSOutlineViewDe
 		return mutableStyle.copy() as! NSParagraphStyle
 	}()
 	private lazy var fontAttributes:[NSAttributedStringKey:Any] = [.font:font,
-																   .foregroundColor:NSColor.black,
+																   .foregroundColor:NSColor.textColor,
 																   .paragraphStyle:paragraphStyle]
 	private lazy var boldFontAttributes:[NSAttributedStringKey:Any] = [.font:NSFont.boldSystemFont(ofSize:fontSize), 
-																	   .foregroundColor:NSColor.black,
+																	   .foregroundColor:NSColor.textColor,
 																	   .paragraphStyle:paragraphStyle]
-	private lazy var disabledFontAttributes:[NSAttributedStringKey:Any] = [.font:font, 
-																		   .foregroundColor:NSColor.disabledControlTextColor,
-																		   .paragraphStyle:paragraphStyle]
 	private let window:NSWindow = {
 		let contentRect = NSMakeRect(0.0, 0.0, 300, 200)
 		let styleMask:NSWindow.StyleMask = [.titled, .closable, .miniaturizable, .resizable]
@@ -164,10 +161,7 @@ class BrowserWindowController:NSObject, NSOutlineViewDataSource, NSOutlineViewDe
 			let objectValue = browser.objectValue
 			let count = browser.children.count
 			if count > 0 {
-				let mutableString = NSMutableAttributedString(string:objectValue, attributes:fontAttributes)
-				let suffix = NSAttributedString(string:" - \(count)", attributes:disabledFontAttributes)
-				mutableString.append(suffix)
-				return mutableString
+				return NSAttributedString(string:objectValue + " - \(count)", attributes:fontAttributes)
 			}
 			else {
 				return NSAttributedString(string:objectValue, attributes:fontAttributes)
