@@ -14,10 +14,10 @@ class BrowserWindowController:NSObject, NSOutlineViewDataSource, NSOutlineViewDe
 		return mutableStyle.copy() as! NSParagraphStyle
 	}()
 	private lazy var fontAttributes:[NSAttributedStringKey:Any] = [.font:font,
-																   .foregroundColor:NSColor.textColor,
+																   .foregroundColor:NSColor.controlTextColor,
 																   .paragraphStyle:paragraphStyle]
 	private lazy var boldFontAttributes:[NSAttributedStringKey:Any] = [.font:NSFont.boldSystemFont(ofSize:fontSize), 
-																	   .foregroundColor:NSColor.textColor,
+																	   .foregroundColor:NSColor.controlTextColor,
 																	   .paragraphStyle:paragraphStyle]
 	private let window:NSWindow = {
 		let contentRect = NSMakeRect(0.0, 0.0, 300, 200)
