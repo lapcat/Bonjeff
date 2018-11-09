@@ -13,10 +13,10 @@ class BrowserWindowController:NSObject, NSOutlineViewDataSource, NSOutlineViewDe
 		mutableStyle.lineBreakMode = .byTruncatingTail
 		return mutableStyle.copy() as! NSParagraphStyle
 	}()
-	private lazy var fontAttributes:[NSAttributedStringKey:Any] = [.font:font,
+	private lazy var fontAttributes:[NSAttributedString.Key:Any] = [.font:font,
 																   .foregroundColor:NSColor.controlTextColor,
 																   .paragraphStyle:paragraphStyle]
-	private lazy var boldFontAttributes:[NSAttributedStringKey:Any] = [.font:NSFont.boldSystemFont(ofSize:fontSize), 
+	private lazy var boldFontAttributes:[NSAttributedString.Key:Any] = [.font:NSFont.boldSystemFont(ofSize:fontSize), 
 																	   .foregroundColor:NSColor.controlTextColor,
 																	   .paragraphStyle:paragraphStyle]
 	private let window:NSWindow = {
@@ -34,7 +34,7 @@ class BrowserWindowController:NSObject, NSOutlineViewDataSource, NSOutlineViewDe
 		browserDelegate.start()
 		
 		window.center()
-		window.setFrameAutosaveName(NSWindow.FrameAutosaveName("Browser Window"))
+		window.setFrameAutosaveName("Browser Window")
 		window.title = title
 		window.delegate = self
 		

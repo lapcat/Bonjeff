@@ -17,7 +17,7 @@ class CopyOutlineView:NSOutlineView {
 		pasteboard.writeObjects(items)
 	}
 	
-	@objc override func validateMenuItem(_ menuItem:NSMenuItem) -> Bool {
+	@objc func validateMenuItem(_ menuItem:NSMenuItem) -> Bool {
 		if let action:Selector = menuItem.action {
 			if action == #selector(copy(_:)) {
 				return numberOfSelectedRows > 0
