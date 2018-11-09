@@ -18,6 +18,10 @@
 	<string>$(BONJEFF_SHORT_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>$(BONJEFF_VERSION)</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
 	<key>NSHumanReadableCopyright</key>
