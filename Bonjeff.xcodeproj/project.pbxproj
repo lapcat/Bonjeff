@@ -26,7 +26,7 @@
 /* Begin PBXFileReference section */
 		522269771F81502E0092AAE3 /* BrowserWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserWindowController.swift; sourceTree = "<group>"; };
 		5248A0521F7EFA710024E37D /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = SOURCE_ROOT; };
-		5248A0531F7EFA710024E37D /* DeveloperID.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DeveloperID.xcconfig; sourceTree = SOURCE_ROOT; };
+		5248A0531F7EFA710024E37D /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = SOURCE_ROOT; };
 		5248A0541F7EFA710024E37D /* Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Shared.xcconfig; sourceTree = SOURCE_ROOT; };
 		526C4A8A1F7F38B00021CC24 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 		5288CFA11F81878E00427D9C /* BrowserDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserDelegate.swift; sourceTree = "<group>"; };
@@ -91,7 +91,7 @@
 			children = (
 				52DB5D9F1F8A579600714804 /* LICENSE.txt */,
 				5248A0521F7EFA710024E37D /* Debug.xcconfig */,
-				5248A0531F7EFA710024E37D /* DeveloperID.xcconfig */,
+				5248A0531F7EFA710024E37D /* Release.xcconfig */,
 				5248A0541F7EFA710024E37D /* Shared.xcconfig */,
 				5248A0511F7EF6A70024E37D /* nonsource */,
 				5248A0501F7EF6A10024E37D /* source */,
@@ -203,12 +203,12 @@
 			};
 			name = Debug;
 		};
-		52EDE5861F7EF3430026C52B /* DeveloperID */ = {
+		52EDE5861F7EF3430026C52B /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5248A0541F7EFA710024E37D /* Shared.xcconfig */;
 			buildSettings = {
 			};
-			name = DeveloperID;
+			name = Release;
 		};
 		52EDE5881F7EF3430026C52B /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -217,12 +217,12 @@
 			};
 			name = Debug;
 		};
-		52EDE5891F7EF3430026C52B /* DeveloperID */ = {
+		52EDE5891F7EF3430026C52B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5248A0531F7EFA710024E37D /* DeveloperID.xcconfig */;
+			baseConfigurationReference = 5248A0531F7EFA710024E37D /* Release.xcconfig */;
 			buildSettings = {
 			};
-			name = DeveloperID;
+			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
@@ -231,7 +231,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				52EDE5851F7EF3430026C52B /* Debug */,
-				52EDE5861F7EF3430026C52B /* DeveloperID */,
+				52EDE5861F7EF3430026C52B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -240,7 +240,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				52EDE5881F7EF3430026C52B /* Debug */,
-				52EDE5891F7EF3430026C52B /* DeveloperID */,
+				52EDE5891F7EF3430026C52B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
