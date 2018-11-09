@@ -139,7 +139,7 @@
 				TargetAttributes = {
 					52EDE5781F7EF3430026C52B = {
 						CreatedOnToolsVersion = 9.0;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
