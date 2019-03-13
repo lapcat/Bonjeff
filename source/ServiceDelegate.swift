@@ -116,7 +116,13 @@ class ServiceDelegate:NSObject, NetServiceDelegate, BonjourNode {
 		records.removeAll()
 		
 		if let txtRecordData = service.txtRecordData() {
-			let txtRecord = NetService.dictionary(fromTXTRecord:txtRecordData)
+			// This crashes in Swift:
+			//let txtRecord = NetService.dictionary(fromTXTRecord:txtRecordData)
+			// When the TXT Record is not in the format key=value,
+			// +[NSNetService dictionaryFromTXTRecordData:] illegally inserts NSNull in place of NSData,
+			// and this crashes when bridged to Swift because it can't bridge NSNull to Data.
+			// We fall back to using the TXT Record data itself with no key.
+			let txtRecord = CFNetServiceCreateDictionaryWithTXTData(nil, txtRecordData as CFData)?.takeRetainedValue() as? Dictionary<String,Data> ?? ["":txtRecordData]
 			for (key, data) in txtRecord {
 				if let line = NSString(data:data, encoding:String.Encoding.utf8.rawValue) {
 					records.append( (key, line as String) )
