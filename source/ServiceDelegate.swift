@@ -116,6 +116,9 @@ class ServiceDelegate:NSObject, NetServiceDelegate, BonjourNode {
 		records.removeAll()
 		
 		if let txtRecordData = service.txtRecordData() {
+			if txtRecordData.isEmpty {
+				return
+			}
 			// This crashes in Swift:
 			//let txtRecord = NetService.dictionary(fromTXTRecord:txtRecordData)
 			// When the TXT Record is not in the format key=value,
