@@ -5,9 +5,9 @@ class BrowserDelegate:NSObject, NetServiceBrowserDelegate, BonjourNode {
 	let browser = NetServiceBrowser()
 	
 	// These need to be overridden
-	var children:[Any] { fatalError() }
-	lazy var objectValue:String = { fatalError() }()
-	lazy var persistentName:String = { fatalError() }()
+	var children:[Any] { preconditionFailure() }
+	lazy var objectValue:String = { preconditionFailure() }()
+	lazy var persistentName:String = { preconditionFailure() }()
 	
 	func start() {
 		browser.includesPeerToPeer = true

@@ -18,7 +18,7 @@ class ServiceDelegate:NSObject, NetServiceDelegate, BonjourNode {
 	
 	@available(*, unavailable)
 	override init() {
-		fatalError()
+		preconditionFailure()
 	}
 	
 	func start() {

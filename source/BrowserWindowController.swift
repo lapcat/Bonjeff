@@ -147,7 +147,7 @@ class BrowserWindowController:NSObject, NSOutlineViewDataSource, NSOutlineViewDe
 		if let node = item as? BonjourNode {
 			return node.children[index]
 		}
-		fatalError()
+		preconditionFailure()
 	}
 	
 	func outlineView(_ outlineView:NSOutlineView, objectValueFor tableColumn:NSTableColumn?, byItem item:Any?) -> Any? {
@@ -181,7 +181,7 @@ class BrowserWindowController:NSObject, NSOutlineViewDataSource, NSOutlineViewDe
 				return mutableString
 			}
 		}
-		fatalError()
+		preconditionFailure()
 	}
 	
 	func outlineView(_ outlineView:NSOutlineView, pasteboardWriterForItem item:Any) -> NSPasteboardWriting? {

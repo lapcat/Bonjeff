@@ -19,7 +19,7 @@ class ServiceBrowserDelegate:BrowserDelegate {
 	
 	@available(*, unavailable)
 	override init() {
-		fatalError()
+		preconditionFailure()
 	}
 	
 	override func start() {

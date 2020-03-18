@@ -14,7 +14,7 @@ class DomainBrowserDelegate:BrowserDelegate {
 	
 	@available(*, unavailable)
 	override init() {
-		fatalError()
+		preconditionFailure()
 	}
 	
 	private func typeFromService(service:NetService) -> String? {
