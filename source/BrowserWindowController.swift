@@ -64,6 +64,8 @@ class BrowserWindowController:NSObject, NSOutlineViewDataSource, NSOutlineViewDe
 		outlineView.allowsTypeSelect = true
 		outlineView.autoresizesOutlineColumn = false
 		outlineView.headerView = nil
+		outlineView.intercellSpacing = NSMakeSize(3.0, 2.0) // macOS 11 SDK changed the default, so use the old value.
+		outlineView.rowHeight = 17.0 // macOS 11 SDK changed the default, so use the old value.
 		outlineView.setDraggingSourceOperationMask([.copy], forLocal:false) // Allow drags to other apps
 		outlineView.usesAlternatingRowBackgroundColors = false
 		
