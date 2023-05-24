@@ -1,5 +1,17 @@
 import Cocoa
 
+extension Data {
+    struct HexEncodingOptions: OptionSet {
+        let rawValue: Int
+        static let upperCase = HexEncodingOptions(rawValue: 1 << 0)
+    }
+
+    func hexEncodedString(options: HexEncodingOptions = []) -> String {
+        let format = options.contains(.upperCase) ? "%02hhX" : "%02hhx"
+        return self.map { String(format: format, $0) }.joined()
+    }
+}
+
 class ServiceDelegate:NSObject, NetServiceDelegate, BonjourNode {
 	let service:NetService
 	private var resolved = [(String, String)]()
@@ -131,7 +143,7 @@ class ServiceDelegate:NSObject, NetServiceDelegate, BonjourNode {
 					records.append( (key, line as String) )
 				}
 				else {
-					records.append( (key, data.description) )
+					records.append( (key, data.hexEncodedString()) )
 				}
 			}
 			// Sort by key in (key, value)
