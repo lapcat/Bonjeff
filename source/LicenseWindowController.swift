@@ -2,6 +2,7 @@ import Cocoa
 
 class LicenseWindowController {
 	private static var licenseWindow:NSWindow?
+	private static var observer:NSObjectProtocol?
 	
 	static func open() {
 		if let window = licenseWindow {
@@ -51,9 +52,8 @@ class LicenseWindowController {
 		
 		licenseWindow = window
 		
-		var observer:NSObjectProtocol!
 		observer = NotificationCenter.default.addObserver(forName:NSWindow.willCloseNotification, object:licenseWindow, queue:nil, using:{_ in
-			NotificationCenter.default.removeObserver(observer)
+			NotificationCenter.default.removeObserver(observer!)
 			licenseWindow = nil
 		})
 	}
