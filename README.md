@@ -26,7 +26,7 @@ The `DEVELOPMENT_TEAM.xcconfig` file should not be added to any git commit. The 
 
 [Jeff Johnson](https://lapcatsoftware.com/)
 
-To support the author, you can [PayPal.Me](https://www.paypal.me/JeffJohnsonWI) or buy the Safari extension StopTheMadness in the [Mac App Store](https://apps.apple.com/app/stopthemadness/id1376402589?mt=12).
+To support the author, you can [PayPal.Me](https://www.paypal.me/JeffJohnsonWI) or buy StopTheMadness Pro in the [Mac App Store](https://apps.apple.com/app/stopthemadness/id6471380298?mt=12).
 
 ## Copyright
 
