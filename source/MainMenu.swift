@@ -116,12 +116,17 @@ extension AppDelegate {
 	}
 	
 	private func populateFindMenu(_ menu:NSMenu) {
+		// Filters the browser window. The browser window controller is the window's delegate, so it's in the responder chain.
 		var title = NSLocalizedString("Find…", comment:"Find… menu item")
-		var menuItem = menu.addItem(withTitle:title, action:#selector(NSResponder.performTextFinderAction(_:)), keyEquivalent:"f")
-		menuItem.tag = NSTextFinder.Action.showFindInterface.rawValue
+		menu.addItem(withTitle:title, action:#selector(BrowserWindowController.showFindPanel(_:)), keyEquivalent:"f")
+		
+		title = NSLocalizedString("Show All", comment:"Show All (clear find filter) menu item")
+		menu.addItem(withTitle:title, action:#selector(BrowserWindowController.showAllRows(_:)), keyEquivalent:"F") // Cmd-Shift-F
+		
+		menu.addItem(NSMenuItem.separator())
 		
 		title = NSLocalizedString("Find Next", comment:"Find Next menu item")
-		menuItem = menu.addItem(withTitle:title, action:#selector(NSResponder.performTextFinderAction(_:)), keyEquivalent:"g")
+		var menuItem = menu.addItem(withTitle:title, action:#selector(NSResponder.performTextFinderAction(_:)), keyEquivalent:"g")
 		menuItem.tag = NSTextFinder.Action.nextMatch.rawValue
 		
 		title = NSLocalizedString("Find Previous", comment:"Find Previous menu item")

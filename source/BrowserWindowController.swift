@@ -28,11 +28,22 @@ class BrowserWindowController:NSObject, NSOutlineViewDataSource, NSOutlineViewDe
 		window.tabbingMode = .disallowed
 		return window
 	}()
+	private var baseTitle = ""
+	
+	// Filtering (Edit > Find > Find…)
+	private lazy var findPanelController = FindPanelController()
+	private var filterText:String? // nil when not filtering
+	private var showsChildrenOfMatches = true
+	private var filteredRootChildren = [Any]() // Only valid while filtering
+	private var filteredChildren = [ObjectIdentifier:[Any]]() // Only valid while filtering, keyed by node
+	private var filterExpandedNodes = Set<ObjectIdentifier>() // Rows the filter has expanded, so refreshes don't re-expand rows the user collapsed
+	private var isChangingExpansionProgrammatically = false // Suppresses saving expanded state to user defaults
 	
 	func open(_ title:String) {
 		migrateUserDefaultsIfNecessary()
 		browserDelegate.start()
 		
+		baseTitle = title
 		window.center()
 		window.setFrameAutosaveName("Browser Window")
 		window.title = title
@@ -91,30 +102,34 @@ class BrowserWindowController:NSObject, NSOutlineViewDataSource, NSOutlineViewDe
 		
 		NotificationCenter.default.addObserver(forName:.nodeDidAdd, object:nil, queue:nil, using:{
 			let object = $0.object
+			if self.filterText != nil {
+				if let service = object as? ServiceDelegate {
+					service.start() // Resolve new services too, so their details can match
+				}
+				self.scheduleFilterRefresh()
+				return
+			}
 			let parent = self.outlineView.parent(forItem:object)
 			self.outlineView.reloadItem(parent, reloadChildren:true)
 			if let node = object as? BonjourNode {
-				if let expandedDefaults = self.expandedUserDefaults() {
-					let persistentName = node.persistentName
-					if let expandedNumber = expandedDefaults[persistentName] as? NSNumber {
-						if expandedNumber.boolValue {
-							self.outlineView.expandItem(node)
-						}
-						return
-					}
-				}
-				
-				if node is DomainBrowserDelegate {
-					// Expand new domains
+				if self.savedExpandedState(of:node) {
 					self.outlineView.expandItem(node)
 				}
 			}
 		})
 		NotificationCenter.default.addObserver(forName:.nodeDidRemove, object:nil, queue:nil, using:{
+			if self.filterText != nil {
+				self.scheduleFilterRefresh()
+				return
+			}
 			let object = $0.object
 			self.outlineView.reloadItem(object, reloadChildren:true)
 		})
 		NotificationCenter.default.addObserver(forName:.nodeDidUpdate, object:nil, queue:nil, using:{
+			if self.filterText != nil {
+				self.scheduleFilterRefresh()
+				return
+			}
 			let object = $0.object
 			self.outlineView.reloadItem(object, reloadChildren:true)
 		})
@@ -123,6 +138,7 @@ class BrowserWindowController:NSObject, NSOutlineViewDataSource, NSOutlineViewDe
 	}
 	
 	func windowWillClose(_ notification:Notification) {
+		NSObject.cancelPreviousPerformRequests(withTarget:self)
 		NotificationCenter.default.removeObserver(self, name:nil, object:nil)
 		outlineView.dataSource = nil
 		browserDelegate.stop()
@@ -136,23 +152,48 @@ class BrowserWindowController:NSObject, NSOutlineViewDataSource, NSOutlineViewDe
 	}
 
 	func outlineView(_ outlineView:NSOutlineView, numberOfChildrenOfItem item:Any?) -> Int {
-		if item == nil {
-			return browserDelegate.children.count
-		}
-		if let node = item as? BonjourNode {
-			return node.children.count
-		}
-		return 0
+		return visibleChildren(of:item).count
 	}
 	
 	func outlineView(_ outlineView:NSOutlineView, child index:Int, ofItem item:Any?) -> Any {
+		return visibleChildren(of:item)[index]
+	}
+	
+	// The children shown in the outline view: all of them, or the filtered ones while filtering.
+	private func visibleChildren(of item:Any?) -> [Any] {
+		if filterText != nil {
+			if item == nil {
+				return filteredRootChildren
+			}
+			if let node = item as? BonjourNode {
+				return filteredChildren[ObjectIdentifier(node)] ?? []
+			}
+			return []
+		}
 		if item == nil {
-			return browserDelegate.children[index]
+			return browserDelegate.children
 		}
 		if let node = item as? BonjourNode {
-			return node.children[index]
+			return node.children
 		}
-		preconditionFailure()
+		return []
+	}
+	
+	// "_http._tcp. - 12", or "_http._tcp. - 2 of 12" while filtering hides some children
+	private func title(of browser:BrowserDelegate) -> String {
+		let objectValue = browser.objectValue
+		let count = browser.children.count
+		if count == 0 {
+			return objectValue
+		}
+		if filterText != nil {
+			let visibleCount = visibleChildren(of:browser).count
+			if visibleCount != count {
+				let format = NSLocalizedString("%@ - %ld of %ld", comment:"Browser row title while filtering: name, visible count, total count")
+				return String(format:format, objectValue, visibleCount, count)
+			}
+		}
+		return objectValue + " - \(count)"
 	}
 	
 	func outlineView(_ outlineView:NSOutlineView, objectValueFor tableColumn:NSTableColumn?, byItem item:Any?) -> Any? {
@@ -163,14 +204,7 @@ class BrowserWindowController:NSObject, NSOutlineViewDataSource, NSOutlineViewDe
 			return nil
 		}
 		if let browser = item as? BrowserDelegate {
-			let objectValue = browser.objectValue
-			let count = browser.children.count
-			if count > 0 {
-				return NSAttributedString(string:objectValue + " - \(count)", attributes:fontAttributes)
-			}
-			else {
-				return NSAttributedString(string:objectValue, attributes:fontAttributes)
-			}
+			return NSAttributedString(string:title(of:browser), attributes:fontAttributes)
 		}
 		if let service = item as? ServiceDelegate {
 			return NSAttributedString(string:service.objectValue, attributes:boldFontAttributes)
@@ -191,14 +225,7 @@ class BrowserWindowController:NSObject, NSOutlineViewDataSource, NSOutlineViewDe
 	
 	func outlineView(_ outlineView:NSOutlineView, pasteboardWriterForItem item:Any) -> NSPasteboardWriting? {
 		if let browser = item as? BrowserDelegate {
-			let objectValue = browser.objectValue
-			let count = browser.children.count
-			if count > 0 {
-				return objectValue + " - \(count)" as NSString
-			}
-			else {
-				return objectValue as NSString
-			}
+			return title(of:browser) as NSString
 		}
 		if let service = item as? ServiceDelegate {
 			return service.objectValue as NSString
@@ -229,7 +256,10 @@ class BrowserWindowController:NSObject, NSOutlineViewDataSource, NSOutlineViewDe
 			node.start()
 		}
 		
-		saveNode(node, expanded:true)
+		// Expansion while filtering is temporary and shouldn't overwrite the saved state
+		if filterText == nil && !isChangingExpansionProgrammatically {
+			saveNode(node, expanded:true)
+		}
 	}
 	
 	func outlineViewItemWillCollapse(_ notification:Notification) {
@@ -243,11 +273,202 @@ class BrowserWindowController:NSObject, NSOutlineViewDataSource, NSOutlineViewDe
 			return
 		}
 		
+		// While filtering, all services keep resolving so their details can match.
+		// They get stopped when the filter is cleared.
+		if filterText != nil {
+			return
+		}
+		
 		if node is ServiceDelegate {
 			node.stop()
 		}
 		
-		saveNode(node, expanded:false)
+		if !isChangingExpansionProgrammatically {
+			saveNode(node, expanded:false)
+		}
+	}
+	
+	// MARK: - Filtering
+	
+	@objc func showFindPanel(_ sender:Any?) {
+		findPanelController.beginSheet(for:window, searchText:filterText ?? "", completion:{ text, showsChildren in
+			self.showsChildrenOfMatches = showsChildren
+			self.setFilter(text.isEmpty ? nil : text)
+		})
+	}
+	
+	@objc func showAllRows(_ sender:Any?) {
+		setFilter(nil)
+	}
+	
+	@objc func validateMenuItem(_ menuItem:NSMenuItem) -> Bool {
+		if menuItem.action == #selector(showAllRows(_:)) {
+			return filterText != nil
+		}
+		return true
+	}
+	
+	private func setFilter(_ text:String?) {
+		NSObject.cancelPreviousPerformRequests(withTarget:self, selector:#selector(refreshFilter), object:nil)
+		let wasFiltering = filterText != nil
+		filterText = text
+		
+		if let text = text {
+			window.title = baseTitle + " — " + String(format:NSLocalizedString("Filtered by “%@”", comment:"Window title suffix while filtering"), text)
+			// Service details are only known once a service is resolved, so resolve all of them.
+			// Results that arrive later update the filtered outline via nodeDidUpdate.
+			forEachNode(in:browserDelegate.children, { node in
+				if let service = node as? ServiceDelegate {
+					service.start()
+				}
+			})
+			rebuildFilter(collapsingFirst:true)
+		}
+		else if wasFiltering {
+			window.title = baseTitle
+			filteredRootChildren.removeAll()
+			filteredChildren.removeAll()
+			filterExpandedNodes.removeAll()
+			outlineView.reloadData()
+			restoreSavedExpansion()
+		}
+	}
+	
+	// Coalesces the many updates that arrive while services resolve
+	private func scheduleFilterRefresh() {
+		NSObject.cancelPreviousPerformRequests(withTarget:self, selector:#selector(refreshFilter), object:nil)
+		perform(#selector(refreshFilter), with:nil, afterDelay:0.25)
+	}
+	
+	@objc private func refreshFilter() {
+		rebuildFilter(collapsingFirst:false) // Keeps rows the user has expanded or collapsed meanwhile
+	}
+	
+	private func rebuildFilter(collapsingFirst:Bool) {
+		if filterText == nil {
+			return
+		}
+		
+		var selectedNodes = [BonjourNode]()
+		for row in outlineView.selectedRowIndexes {
+			if let node = outlineView.item(atRow:row) as? BonjourNode {
+				selectedNodes.append(node)
+			}
+		}
+		
+		filteredChildren.removeAll()
+		var nodesToExpand = [BonjourNode]()
+		filteredRootChildren = filteredItems(browserDelegate.children, showAll:false, nodesToExpand:&nodesToExpand)
+		
+		isChangingExpansionProgrammatically = true
+		outlineView.reloadData() // Keeps the expanded state of rows that are still there
+		if collapsingFirst {
+			outlineView.collapseItem(nil, collapseChildren:true)
+			filterExpandedNodes.removeAll()
+		}
+		var expandedNodes = Set<ObjectIdentifier>()
+		for node in nodesToExpand { // Parents come before their children
+			let identifier = ObjectIdentifier(node)
+			if !filterExpandedNodes.contains(identifier) {
+				outlineView.expandItem(node)
+			}
+			expandedNodes.insert(identifier)
+		}
+		filterExpandedNodes = expandedNodes // Also drops nodes that are gone
+		isChangingExpansionProgrammatically = false
+		
+		var rows = IndexSet()
+		for node in selectedNodes {
+			let row = outlineView.row(forItem:node)
+			if row >= 0 {
+				rows.insert(row)
+			}
+		}
+		outlineView.selectRowIndexes(rows, byExtendingSelection:false)
+	}
+	
+	// Returns the items that stay visible, and fills filteredChildren for every node below them.
+	// showAll is true below a matching row when its contents are to be shown.
+	// nodesToExpand receives the rows leading to matches (and matching rows whose contents are shown), parents first.
+	private func filteredItems(_ items:[Any], showAll:Bool, nodesToExpand:inout [BonjourNode]) -> [Any] {
+		var visible = [Any]()
+		for item in items {
+			let matches = showAll || itemMatchesFilter(item)
+			if let node = item as? BonjourNode {
+				let expandIndex = nodesToExpand.count
+				let children = filteredItems(node.children, showAll:matches && showsChildrenOfMatches, nodesToExpand:&nodesToExpand)
+				filteredChildren[ObjectIdentifier(node)] = children
+				if !showAll && !children.isEmpty {
+					nodesToExpand.insert(node, at:expandIndex)
+				}
+				if matches || !children.isEmpty {
+					visible.append(item)
+				}
+			}
+			else if matches {
+				visible.append(item)
+			}
+		}
+		return visible
+	}
+	
+	private func itemMatchesFilter(_ item:Any) -> Bool {
+		guard let filterText = filterText else {
+			return true
+		}
+		let text:String
+		if let node = item as? BonjourNode {
+			text = node.objectValue
+		}
+		else if let (key, value) = item as? (String, String) {
+			text = key.isEmpty ? value : key + ": " + value
+		}
+		else {
+			return false
+		}
+		return text.range(of:filterText, options:.caseInsensitive) != nil
+	}
+	
+	// Back to the expansion state the user had before filtering
+	private func restoreSavedExpansion() {
+		isChangingExpansionProgrammatically = true
+		outlineView.collapseItem(nil, collapseChildren:true) // Also stops the services that were expanded
+		forEachNode(in:browserDelegate.children, { node in
+			if savedExpandedState(of:node) {
+				outlineView.expandItem(node)
+			}
+		})
+		isChangingExpansionProgrammatically = false
+		
+		// Stop the services that were only resolved for the search
+		forEachNode(in:browserDelegate.children, { node in
+			if let service = node as? ServiceDelegate {
+				if !outlineView.isItemExpanded(service) {
+					service.stop()
+				}
+			}
+		})
+	}
+	
+	// Visits nodes parents first. Leaf rows (key/value pairs) aren't nodes.
+	private func forEachNode(in items:[Any], _ body:(BonjourNode) -> Void) {
+		for item in items {
+			if let node = item as? BonjourNode {
+				body(node)
+				forEachNode(in:node.children, body)
+			}
+		}
+	}
+	
+	// MARK: - Expanded state
+	
+	private func savedExpandedState(of node:BonjourNode) -> Bool {
+		if let expandedDefaults = expandedUserDefaults() {
+			if let expandedNumber = expandedDefaults[node.persistentName] as? NSNumber {
+				return expandedNumber.boolValue
+			}
+		}
+		return node is DomainBrowserDelegate // Expand new domains
 	}
 	
 	private func saveNode(_ node:BonjourNode, expanded:Bool) {
